@@ -108,8 +108,7 @@ and/or location type.}
 noaa(datasetid='GHCND', locationid = 'FIPS:02', startdate = '2010-05-01', enddate = '2010-05-31', limit=5)
 
 # get information on a call
-out <- noaa(datasetid='GHCND', locationid = 'FIPS:02', startdate = '2010-05-01', enddate = '2010-05-31', limit=5)
-dat <- as_ropensci(out, somedata)
+dat <- noaa(datasetid='GHCND', locationid = 'FIPS:02', startdate = '2010-05-01', enddate = '2010-05-31', limit=5)
 dat$data # the data ouput
 dat$status_code # the HTTP status
 dat$status_message # a more meaningful HTTP status message
