@@ -3,7 +3,7 @@
 #' 
 #' From the NOAA API docs: "The data endpoint is used for actually fetching the data."
 #' 
-#' @import httr
+#' @import httr ropensciToolkit
 #' @importFrom plyr compact round_any rbind.fill
 #' @template rnoaa 
 #' @template noaa
@@ -11,6 +11,17 @@
 #'    data.frame.
 #' @examples \dontrun{
 #' noaa(datasetid='GHCND', locationid = 'FIPS:02', startdate = '2010-05-01', enddate = '2010-05-31', limit=5)
+#' 
+#' # get information on a call
+#' dat <- noaa(datasetid='GHCND', locationid = 'FIPS:02', startdate = '2010-05-01', enddate = '2010-05-31', limit=5)
+#' dat$data # the data ouput  
+#' dat$status_code # the HTTP status
+#' dat$status_message # a more meaningful HTTP status message
+#' dat$call # the url that was called
+#' dat$meta$handle # the url handle
+#' dat$meta$headers # headers
+#' dat$meta$cookies # cookies
+#' dat$meta$config # any configuration settings passed
 #' 
 #' # GHCN-Daily data since Septemer 1 2013
 #' noaa(datasetid='GHCND', startdate = '2013-11-09')
@@ -93,7 +104,8 @@ noaa <- function(datasetid=NULL, datatypeid=NULL, stationid=NULL, locationid=NUL
     atts <- list(totalCount=meta$count, pageCount=meta$limit, offset=meta$offset)
   }
   
-  all <- list(meta=atts, data=dat)
-  class(all) <- "noaa_data"
+  all <- as_ropensci(httr_res=temp, data=dat)
+  all$result_atts <- atts
+  class(all) <- c("noaa_data", "ropensci")
   return( all )
 }

@@ -107,6 +107,18 @@ and/or location type.}
 \dontrun{
 noaa(datasetid='GHCND', locationid = 'FIPS:02', startdate = '2010-05-01', enddate = '2010-05-31', limit=5)
 
+# get information on a call
+out <- noaa(datasetid='GHCND', locationid = 'FIPS:02', startdate = '2010-05-01', enddate = '2010-05-31', limit=5)
+dat <- as_ropensci(out, somedata)
+dat$data # the data ouput
+dat$status_code # the HTTP status
+dat$status_message # a more meaningful HTTP status message
+dat$call # the url that was called
+dat$meta$handle # the url handle
+dat$meta$headers # headers
+dat$meta$cookies # cookies
+dat$meta$config # any configuration settings passed
+
 # GHCN-Daily data since Septemer 1 2013
 noaa(datasetid='GHCND', startdate = '2013-11-09')
 

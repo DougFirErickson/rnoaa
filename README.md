@@ -24,6 +24,139 @@ library(rnoaa)
 
 ### Quick start
 
+#### The main entry point to data is the `noaa` function
+
+Get some data
+
+```coffee
+dat <- noaa(datasetid='GHCND', locationid = 'FIPS:02', startdate = '2010-05-01', enddate = '2010-05-31', limit=5)
+```
+
+Get information on the result, from the data to fine details of the http interaction.
+
+The default output
+
+```coffee
+dat
+
+Call status  :  success: (200) OK 
+Results from :  www.ncdc.noaa.gov 
+Date/time    :  Fri, 29 Nov 2013 23:53:16 GMT 
+Data format  :  data.frame 
+Queried      :  
+ datasetid = GHCND 
+ locationid = FIPS:02 
+ startdate = 2010-05-01 
+ enddate = 2010-05-31 
+ limit = 5 
+            station value attributes datatype       date
+1 GHCND:CA001206197     0      T,,G,     PRCP 2010-05-01
+2 GHCND:CA001206197     0       ,,G,     SNOW 2010-05-01
+3 GHCND:CA001206197     0       ,,G,     SNWD 2010-05-01
+4 GHCND:CA001206197    80       ,,G,     TMAX 2010-05-01
+5 GHCND:CA001206197     5       ,,G,     TMIN 2010-05-01
+```
+
+The data
+
+```coffee
+dat$data 
+
+            station value attributes datatype       date
+1 GHCND:CA001206197     0      T,,G,     PRCP 2010-05-01
+2 GHCND:CA001206197     0       ,,G,     SNOW 2010-05-01
+3 GHCND:CA001206197     0       ,,G,     SNWD 2010-05-01
+4 GHCND:CA001206197    80       ,,G,     TMAX 2010-05-01
+5 GHCND:CA001206197     5       ,,G,     TMIN 2010-05-01
+```
+
+The HTTP status
+
+```coffee
+dat$status_code
+
+[1] 200
+```
+
+The HTTP status message
+
+```coffee
+dat$status_message # a more meaningful HTTP status message
+
+[1] "success: (200) OK"
+```
+
+The URL that was actually called. You can view this in your browser by doing `browseURL(dat$call)`
+
+```coffee
+dat$call
+
+[1] "http://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&locationid=FIPS%3A02&startdate=2010-05-01&enddate=2010-05-31&limit=5"
+```
+
+The url handle
+
+```coffee
+dat$meta$handle 
+
+Host: http://www.ncdc.noaa.gov/ <0x7f8dcb843800>
+```
+
+HTTP headers
+
+```coffee
+dat$meta$headers
+
+$date
+[1] "Fri, 29 Nov 2013 23:46:59 GMT"
+
+$`access-control-allow-origin`
+[1] "*"
+
+$`access-control-allow-methods`
+[1] "GET"
+
+$`access-control-allow-headers`
+[1] "token"
+
+$`content-type`
+[1] "application/json;charset=UTF-8"
+
+$connection
+[1] "close"
+
+$`transfer-encoding`
+[1] "chunked"
+
+$status
+[1] "200"
+
+$statusmessage
+[1] "OK"
+
+attr(,"class")
+[1] "insensitive" "list"       
+```
+
+Cookies
+
+```coffee
+dat$meta$cookies
+
+list()
+```
+
+Any configuration settings passed
+
+```coffee
+dat$meta$config
+
+Config: 
+List of 1
+ $ httpheader:"hzGfPCLWFGWdVSkjVIljzQVfkHvlNmeQ"
+  ..- attr(*, "names")="token"
+```
+
 ####  Fetch list of city locations in descending order
 
 ```coffee
