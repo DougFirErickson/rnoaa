@@ -153,7 +153,7 @@ dat$meta$config
 
 Config: 
 List of 1
- $ httpheader:"hzGfPCLWFGWdVSkjVIljzQVfkHvlNmeQ"
+ $ httpheader:"your_token"
   ..- attr(*, "names")="token"
 ```
 
