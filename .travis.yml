@@ -1,12 +1,23 @@
-language: c
-script: ./travis-tool.sh run_tests
-before_script:
-- curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-- chmod 755 ./travis-tool.sh
-- ./travis-tool.sh bootstrap
-- ./travis-tool.sh install_deps
-- ./travis-tool.sh github_package assertthat
+language: r
+
+r_binary_packages:
+  - rgdal
+  - ncdf
+
+r_github_packages:
+  - jimhester/robustr
+  - jimhester/covr
+
+after_success:
+  - Rscript -e 'library(covr); coveralls()'
+
 notifications:
-  hipchat:
-    rooms:
-      secure: prqT/tKBBCYofA9PPkg/A8P4WmElKO6bByoy2BuCceRI5XRMlB1LeHmFJs/VPWowVXrvPqQgV/x6+d9cBw6ADEzq3nEFq+ULTstShqK+Qum2VJVtUjyz6pAI+EfcUZvD66XZNqOQ2CiWuRH3CCeQ6cFV39ElXSEW9JlExVuQaRs=
+  email:
+    on_success: change
+    on_failure: change
+  slack:
+    secure: fee+yd3SW53ASTFm0ZH3/HKD7wUn1zJL+LHbwJErIMhAemo2FcNaLDGF5TXLuVCSMMnIE+rc8c8NEH0Mf+Jw4+EiZEfEsbu4Ai5xxx81jCJV3sCRAQZG+Tpes+zR3rnxxs7LyM9EcVGf/ypMCLREdAM1rluNrbAe14DZI0b4pjw=
+
+env:
+  global:
+    secure: cgAtrSgJVgVNr3+6D4pg4R3rA4Nb0n2rmlHzqVaC/8EvkTGbUZ5qQxc5SFaYAAwm02UQQUodgztzhgAe4BYi4YIdzb4sYh+YbBgug1MABGKY4IDswanvYqA3IAcjiwbHVYpYiQgl/nt/qqQXoD0d29XRQXN0puf+Aw6Y7uMQIyA=
